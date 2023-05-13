@@ -1,43 +1,51 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
-// import UserCard from "../components/UserCard";
-
-// const Profile = () => {
-//   const user = useSelector((state) => state.currentUser);
-
-//   return (
-//     <div>
-//       <h1>Profile</h1>
-//       <UserCard user={user} />
-//     </div>
-//   );
-// };
-
-// export default Profile;
-
-
 import React from 'react';
 import { connect } from 'react-redux';
-import { Profile, Loader } from '../components';
-import { clearUser } from '../redux/actions';
+import Profile from '../components/Profile';
+import { clearUser, setUser } from '../redux/actions';
+import { auth } from '../firebase';
 
-const ProfilePage = ({ user, clearUser }) => {
+
+const ProfilePage = ({ user, clearUser, setUser }) => {
+  const handleLogin = () => {
+    // Call Firebase auth method to sign in the user
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // Update the Redux store with the user information
+        setUser(user);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error signing in: ', error);
+      });
+  };
+
   const handleLogout = () => {
     // Call Firebase auth method to sign out the user
-    // ...
-    // Update Redux store with empty user data
-    clearUser();
+    auth.signOut()
+      .then(() => {
+        // Update Redux store with empty user data
+        clearUser();
+      })
+      .catch((error) => {
+        console.error('Error signing out: ', error);
+      });
   };
 
   return (
     <div>
-      {user ? (
+      {user && user.uid ? (
         <div>
           <h2>Profile</h2>
-          <Profile user={user} onLogout={handleLogout} />
+          <Profile user={user} />
+          <button onClick={handleLogout}>Log Out</button>
         </div>
       ) : (
-        <Loader />
+        <div>
+          <p>Please log in to view your profile.</p>
+          <button onClick={handleLogin}>Log In</button>
+        </div>
       )}
     </div>
   );
@@ -49,4 +57,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { clearUser })(ProfilePage);
+export default connect(mapStateToProps, { clearUser, setUser })(ProfilePage);

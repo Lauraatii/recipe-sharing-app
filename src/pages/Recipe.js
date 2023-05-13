@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteRecipe } from "../redux/actions";
+import {
+  deleteRecipe,
+  addRating,
+  deleteRating,
+  addComment,
+  deleteComment,
+} from "../redux/actions";
 import RecipeCard from "../components/RecipeCard";
 import { firestore } from "../firebase";
 import RecipeForm from "../components/RecipeForm";
@@ -14,16 +20,19 @@ const Recipe = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = firestore.collection("recipes").doc(id).onSnapshot((doc) => {
-      if (doc.exists) {
-        setRecipe({
-          id: doc.id,
-          ...doc.data(),
-        });
-      } else {
-        setRecipe(null);
-      }
-    });
+    const unsubscribe = firestore
+      .collection("recipes")
+      .doc(id)
+      .onSnapshot((doc) => {
+        if (doc.exists) {
+          setRecipe({
+            id: doc.id,
+            ...doc.data(),
+          });
+        } else {
+          setRecipe(null);
+        }
+      });
     return unsubscribe;
   }, [id]);
 
@@ -39,6 +48,22 @@ const Recipe = () => {
     setRecipe(updatedRecipe);
   };
 
+  const handleAddRating = (recipeId, rating) => {
+    dispatch(addRating(recipeId, rating));
+  };
+
+  const handleDeleteRating = (recipeId, rating) => {
+    dispatch(deleteRating(recipeId, rating));
+  };
+
+  const handleAddComment = (recipeId, comment) => {
+    dispatch(addComment(recipeId, comment));
+  };
+
+  const handleDeleteComment = (recipeId, commentId) => {
+    dispatch(deleteComment(recipeId, commentId));
+  };
+
   return (
     <div>
       {recipe ? (
@@ -51,6 +76,14 @@ const Recipe = () => {
               <RecipeForm onSubmit={handleEdit} recipe={recipe} />
             </>
           )}
+          {/* Pass the handler functions to the RecipeDetail component */}
+          <RecipeDetail
+            recipe={recipe}
+            onAddRating={handleAddRating}
+            onDeleteRating={handleDeleteRating}
+            onAddComment={handleAddComment}
+            onDeleteComment={handleDeleteComment}
+          />
         </>
       ) : (
         <p>Recipe not found.</p>

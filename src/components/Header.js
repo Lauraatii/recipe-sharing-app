@@ -1,8 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "../styles/header.css"
+import { connect } from 'react-redux';
+import { auth } from '../firebase';
+import { clearUser } from '../redux/actions';
+import "../styles/header.css";
 
-function Header() {
+function Header({ user, clearUser }) {
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        clearUser();
+      })
+      .catch((error) => {
+        console.error('Error signing out: ', error);
+      });
+  };
+
   return (
     <header>
       <div className="logo">
@@ -12,23 +25,38 @@ function Header() {
       </div>
       <nav>
         <ul>
-          <li>
-          <Link to="/recipes">Recipes</Link>
-          </li>
-          <li>
-            <Link to="/upload">Upload Recipe</Link>
-          </li>
-          <li>
-            <Link to="/login">Log In</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          {user && user.uid ? (
+            <>
+              <li>
+                <Link to="/upload">Upload Recipe</Link>
+              </li>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <button onClick={handleLogout}>Log Out</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Log In</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
 
-export default Header;
+export default connect(mapStateToProps, { clearUser })(Header);

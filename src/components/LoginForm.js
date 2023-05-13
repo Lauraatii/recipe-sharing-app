@@ -16,6 +16,7 @@ const LoginForm = () => {
     auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log("User signed in:", user);
         dispatch(setUser(user));
         // Redirect to the main page after successful login
         navigate("/");
