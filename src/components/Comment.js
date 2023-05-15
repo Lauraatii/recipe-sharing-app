@@ -1,17 +1,15 @@
 import React from 'react';
 
-const Comment = ({ comment, onDeleteComment }) => {
-  const handleDelete = () => {
-    onDeleteComment(comment.recipeId, comment.id);
-  };
+const Comment = ({ comment }) => {
 
   return (
     <div className="comment">
       <h4>{comment.author}</h4>
       <p>{comment.content}</p>
-      <button onClick={handleDelete}>Delete</button>
+      <p>{comment.email}</p> 
     </div>
   );
 };
+
 
 export default Comment;

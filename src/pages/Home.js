@@ -5,13 +5,6 @@ import RecipeList from "../components/RecipeList";
 import "../styles/home.css";
 import { firestore } from "../firebase";
 import { collection, onSnapshot, query } from "firebase/firestore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import {
-  faFacebookF,
-  faInstagram,
-  faTiktok,
-} from "@fortawesome/free-brands-svg-icons";
 
 
 const Home = () => {
@@ -122,18 +115,7 @@ const Home = () => {
         </div>
         <RecipeList className="recipe-list" recipes={filteredRecipes} />
       </div>
-      <div className="footer">
-        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-          <FontAwesomeIcon icon={faFacebookF} />
-        </a>
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-          <FontAwesomeIcon icon={faInstagram} />
-        </a>
-        <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
-          <FontAwesomeIcon icon={faTiktok} />
-        </a>
-      </div>
-    </div>
+  </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import Comment from './Comment';
 
-const RecipeComments = ({ onDeleteComment }) => {
+const RecipeComments = () => {
   const [comments, setComments] = useState([]);
   const { id } = useParams(); // Get the recipe ID from the URL parameters
 
@@ -29,7 +29,7 @@ const RecipeComments = ({ onDeleteComment }) => {
     <div className="recipe-comments">
       <h2>Comments</h2>
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} onDeleteComment={onDeleteComment} />
+        <Comment key={comment.id} comment={comment} />
       ))}
     </div>
   );

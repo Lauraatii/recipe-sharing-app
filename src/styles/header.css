@@ -8,7 +8,8 @@ header {
 }
 
 .logo img {
-  height: 60px;
+  height: 55px;
+  margin-left: 55px;
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.1));
 }
 

@@ -23,14 +23,17 @@ const firestore = firebase.firestore();
 const storage = firebase.storage();
 
 // Observer to listen for changes in the user's authentication state
-auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged(async (user) => {
   console.log("Firebase user object:", user);
 
   if (user) {
-    store.dispatch(setUser({ uid: user.uid, email: user.email }));
+    const userDoc = await firestore.collection("users").doc(user.uid).get();
+    const profileImageUrl = userDoc.data().profileImageUrl;
+    store.dispatch(setUser({ uid: user.uid, email: user.email, profileImageUrl }));
   } else {
-    store.dispatch(setUser({ uid: null, email: null }));
+    store.dispatch(setUser({ uid: null, email: null, profileImageUrl: null }));
   }
 });
+
 
 export { app, auth, firestore, storage };

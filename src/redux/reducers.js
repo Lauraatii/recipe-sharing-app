@@ -59,11 +59,12 @@ function userReducer(state = initialState.user, action) {
       return { ...state, ...action.payload };
     case CLEAR_USER:
     case USER_LOGOUT:
-      return { uid: null, email: null };
+      return { uid: null, email: null, profileImageUrl: null }; 
     default:
       return state;
   }
 }
+
 
 function errorReducer(state = initialState.error, action) {
   switch (action.type) {

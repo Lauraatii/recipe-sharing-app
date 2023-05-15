@@ -15,8 +15,8 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 
-export function addRecipe(recipe) {
-  return { type: ADD_RECIPE, payload: recipe };
+export function addRecipe(recipe, userEmail) {
+  return { type: ADD_RECIPE, payload: { ...recipe, authorEmail: userEmail } };
 }
 
 export function editRecipe(id, recipe) {
@@ -48,7 +48,11 @@ export const updateRecipe = (recipe) => {
 export const setUser = (user) => {
   return {
     type: SET_USER,
-    payload: user,
+    payload: {
+      uid: user.uid,
+      email: user.email,
+      profileImageUrl: user.profileImageUrl,
+    },
   };
 };
 

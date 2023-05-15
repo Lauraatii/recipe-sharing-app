@@ -101,16 +101,55 @@
   color: #f1e9e5;
   padding: 1rem 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
   width: 100%;
+  box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.2); 
+}
+
+.footer .logo-info {
+  display: flex;
+  align-items: center;
+}
+
+.footer .logo-info img {
+  width: 40px; 
+  height: 40px; 
+  margin-left: 65px;
 }
 
 .footer p {
-  margin: 0;
-  padding: 0;
+
   font-size: 0.8rem;
-  text-align: center;
+  font-weight: 500;
+  margin-left: 600px;
+}
+
+.footer .social-icons {
+  display: flex;
+  justify-content: center;
+  margin-right: 55px;
+}
+
+.footer .social-icons a {
+  margin: 0 0.4rem;
+  color: #f1e9e5;
+  font-size: 1.2rem;
+}
+
+.footer .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 50px;
+}
+
+.footer .footer-links a {
+  color: #f1e9e5;
+  text-decoration: none;
+  font-weight: 500; /* Material design uses medium weight fonts */
 }
 
 .home .recipe-list {

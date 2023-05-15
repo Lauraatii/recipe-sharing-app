@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { auth } from '../firebase';
 import { clearUser } from '../redux/actions';
 import "../styles/header.css";
+import logo from "../pages/share-a-dish-logo.png";
+
 
 function Header({ user, clearUser }) {
   const handleLogout = () => {
@@ -20,7 +22,7 @@ function Header({ user, clearUser }) {
     <header>
       <div className="logo">
         <Link to="/">
-          <img src="/logo.png" alt="Recipe Sharing App Logo" />
+        <img src={logo} alt="logo" />
         </Link>
       </div>
       <nav>
