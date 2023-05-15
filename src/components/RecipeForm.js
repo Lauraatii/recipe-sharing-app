@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { storage, auth } from '../firebase';
 import "../styles/upload.css";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import 'firebase/compat/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";import 'firebase/compat/firestore';
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Modal from 'react-modal';
 
@@ -29,11 +30,24 @@ const RecipeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if image is selected
+    if (!image) {
+      console.error("Image not selected");
+      return;
+    }
+
   
     // Upload image to Firebase Storage
-    const imageRef = ref(storage, `images/${image.name}`);
-    await uploadBytes(imageRef, image);
-    const imageUrl = await getDownloadURL(imageRef);
+    // console.log(image, image.name);
+    console.log(storage);
+
+    const imageRef = firebase.storage().ref(`images/${image.name}`);
+    await firebase.storage().ref(`images/${image.name}`).put(image);
+    const imageUrl = await firebase.storage().ref(`images/${image.name}`).getDownloadURL();
+
+   
+
 
     // Check if the user is authenticated
     const user = auth.currentUser;
@@ -64,8 +78,10 @@ const RecipeForm = () => {
   };
   
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+    const file = e.target.files[0];
+    setImage(file);
+  };  
+  
 
   const updateIngredient = (index, value) => {
     const updatedIngredients = [...ingredients];

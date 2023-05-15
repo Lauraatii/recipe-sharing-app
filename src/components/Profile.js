@@ -3,9 +3,7 @@ import { firestore, storage } from '../firebase';
 import { useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import RecipeCard from "../components/RecipeCard";
-import '../styles/profile.css';
-
-
+import styles from '../styles/profile.module.css';
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -72,34 +70,42 @@ const Profile = () => {
   
     console.log("Loading user recipes...");
     loadUserRecipes();
-  }, [user]); 
+  }, [user]);
   
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Profile</h1>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Profile</h1>
       {user && user.uid ? (
         <div>
-          <p>Welcome, {user.email}</p>
+          <p className={styles.welcomeMessage}>Welcome, {user.email}</p>
           <UserCard user={user} />
-          <h3>Your Recipes:</h3>
+          <h3 className={styles.subHeading}>Your Recipes:</h3>
           {userRecipes.length > 0 ? (
-          userRecipes.map((recipe) => (
-            <div key={recipe.id}>
-              <RecipeCard recipe={recipe} />
-              <button onClick={() => handleEditRecipe(recipe.id, recipe)}>Edit</button>
-              <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
-            </div>
-          ))
-        ) : (
-          <p>You have not yet created any recipes.</p>
-        )}
+  userRecipes.map((recipe) => (
+    <div key={recipe.id}>
+      <RecipeCard
+        recipe={recipe}
+        onEdit={handleEditRecipe}
+        onDelete={handleDeleteRecipe}
+        showButtons={true}
+      />
+    </div>
+  ))
+) : (
+  <p className={styles.noRecipesMessage}>
+    You have not yet created any recipes.
+  </p>
+)}
         </div>
       ) : (
-        <p>Please log in to view your profile.</p>
+        <p className={styles.loginMessage}>
+          Please log in to view your profile.
+        </p>
       )}
     </div>
   );
+  
 };
 
 export default Profile;

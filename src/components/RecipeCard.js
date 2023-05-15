@@ -2,15 +2,40 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "../styles/recipeList.css"
 
-const RecipeCard = ({ recipe }) => {
-  console.log('Recipe in RecipeCard:', recipe);
-  console.log('Image URL in RecipeCard:', recipe.image);
+// const RecipeCard = ({ recipe }) => {
+//   console.log('Recipe in RecipeCard:', recipe);
+//   console.log('Image URL in RecipeCard:', recipe.image);
+
+//   return (
+//     <Link to={`/recipes/${recipe.id}`} className="recipe-card">
+//       <h2>{recipe.title}</h2>
+//       <img src={recipe.image} alt={recipe.title} className="recipe-image"  />
+//     </Link>
+//   );
+// };
+
+// export default RecipeCard;
+
+const RecipeCard = ({ recipe, onEdit, onDelete, showButtons }) => {
+  
 
   return (
-    <Link to={`/recipes/${recipe.id}`} className="recipe-card">
-      <h2>{recipe.title}</h2>
-      <img src={recipe.image} alt={recipe.title} className="recipe-image"  />
-    </Link>
+    <div className="recipe-card">
+      <Link to={`/recipes/${recipe.id}`} className="recipe-link">
+        <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+        <h2 className="recipe-title">{recipe.title}</h2>
+      </Link>
+      <div className="recipe-details">
+        <p className="recipe-time">Time: {recipe.time} min</p>
+        <p className="recipe-servings">Servings: {recipe.servings}</p>
+      </div>
+      {showButtons && (
+        <div className="recipe-buttons">
+          <button onClick={() => onEdit(recipe.id, recipe)}>Edit</button>
+          <button onClick={() => onDelete(recipe.id)}>Delete</button>
+        </div>
+      )}
+    </div>
   );
 };
 

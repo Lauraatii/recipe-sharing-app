@@ -51,6 +51,7 @@ function recipesReducer(state = initialState.recipes, action) {
   }
 }
 
+
 function userReducer(state = initialState.user, action) {
   switch (action.type) {
     case SET_USER:
