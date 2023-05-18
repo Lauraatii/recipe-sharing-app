@@ -8,10 +8,15 @@ const RecipeCard = ({ recipe, onEdit, onDelete, showButtons }) => {
 
   return (
     <div className="recipe-card">
-      <Link to={`/recipes/${recipe.id}`} className="recipe-link">
-        <img src={recipe.image} alt={recipe.title} className="recipe-image" />
-        <h2 className="recipe-title">{recipe.title}</h2>
-      </Link>
+     <Link to={`/recipes/${recipe.id}`} className="recipe-link">
+      {recipe.isVegan && 
+        <div className='vegan-icon-wrapper'>
+          <div className='vegan-icon'>🌱</div> 
+        </div>
+      }
+      <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+      <h2 className="recipe-title">{recipe.title}</h2>
+    </Link>
       <div className="recipe-details">
         <p className="recipe-time">Time: {recipe.time} min</p>
         <p className="recipe-servings">Servings: {recipe.servings}</p>

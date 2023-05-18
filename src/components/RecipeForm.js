@@ -18,6 +18,8 @@ const RecipeForm = () => {
   const [ingredients, setIngredients] = useState(['']);
   const [instructions, setInstructions] = useState(['']);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -42,7 +44,7 @@ const RecipeForm = () => {
     // console.log(image, image.name);
     console.log(storage);
 
-    const imageRef = firebase.storage().ref(`images/${image.name}`);
+    // const imageRef = firebase.storage().ref(`images/${image.name}`);
     await firebase.storage().ref(`images/${image.name}`).put(image);
     const imageUrl = await firebase.storage().ref(`images/${image.name}`).getDownloadURL();
 
@@ -70,6 +72,7 @@ const RecipeForm = () => {
       createdBy: user.uid, 
       createdByEmail: user.email, 
       createdAt: serverTimestamp(),
+      isVegan,
     };
     await addDoc(recipesRef, newRecipe);
   
@@ -104,17 +107,22 @@ const RecipeForm = () => {
     <>
       <form onSubmit={handleSubmit}>
         <h2>Share Your Recipe with Others</h2>
-        <input type="text" id="title" placeholder="Recipe Name" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <textarea id="description" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <label htmlFor="image" className="file-upload-label">Upload image</label>
-        <input type="file" id="image" onChange={handleImageChange} />
-        <input type="number" id="time" placeholder="Time (minutes)" value={time} onChange={(e) => setTime(e.target.value)} />
-        <input type="number" id="servings" placeholder="Servings" value={servings} onChange={(e) => setServings(e.target.value)} />
+        <input type="text" id="title" placeholder="Recipe Name" value={title} required onChange={(e) => setTitle(e.target.value)} />
+        <textarea id="description" placeholder="Description" value={description} required onChange={(e) => setDescription(e.target.value)} />
+        <label htmlFor="vegan" className="label-vegan">
+          Is this recipe vegan?
+          <input type="checkbox" id="vegan" onChange={() => setIsVegan(!isVegan)} />
+        </label>
+        <label htmlFor="image" className="file-upload-label" >Upload image</label>
+        <input type="file" id="image" required onChange={handleImageChange} />
+        <input type="number" id="time" required placeholder="Time (minutes)" value={time} onChange={(e) => setTime(e.target.value)} />
+        <input type="number" id="servings" placeholder="Servings" required value={servings} onChange={(e) => setServings(e.target.value)} />
         {ingredients.map((ingredient, index) => (
           <textarea
             key={index}
             rows="2"
             placeholder="Ingredients"
+            required
             value={ingredient}
             onChange={(e) => updateIngredient(index, e.target.value)}
             onKeyDown={handleKeyDown}
@@ -124,6 +132,7 @@ const RecipeForm = () => {
           <textarea
             key={index}
             rows="3"
+            required
             placeholder="Instruction"
             value={instruction}
             onChange={(e) => updateInstruction(index, e.target.value)}

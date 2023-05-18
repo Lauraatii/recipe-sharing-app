@@ -1,8 +1,7 @@
 .login-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(60vh - 60px);
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
   }
   
   .login-form-container form {

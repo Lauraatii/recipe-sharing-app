@@ -4,18 +4,23 @@ import { useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import RecipeCard from "../components/RecipeCard";
 import styles from '../styles/profile.module.css';
+import RecipeEditForm from "../components/RecipeEditForm";
+
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const [userRecipes, setUserRecipes] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
 
   console.log("User object:", user);
 
-  const handleEditRecipe = async (recipeId, updatedData) => {
+  const handleEditRecipe = async (updatedData) => {
     try {
-      const recipeRef = firestore.collection('recipes').doc(recipeId);
+      const recipeRef = firestore.collection('recipes').doc(selectedRecipe.id);
       await recipeRef.update(updatedData);
       console.log('Recipe updated successfully');
+      setSelectedRecipe(null); 
     } catch (error) {
       console.error('Error updating recipe:', error);
     }
@@ -82,14 +87,22 @@ const Profile = () => {
           <UserCard user={user} />
           <h3 className={styles.subHeading}>Your Recipes:</h3>
           {userRecipes.length > 0 ? (
-  userRecipes.map((recipe) => (
+          userRecipes.map((recipe) => (
     <div key={recipe.id}>
-      <RecipeCard
-        recipe={recipe}
-        onEdit={handleEditRecipe}
-        onDelete={handleDeleteRecipe}
-        showButtons={true}
-      />
+      {selectedRecipe && selectedRecipe.id === recipe.id ? (
+                  <RecipeEditForm
+                    recipe={selectedRecipe}
+                    onEdit={handleEditRecipe}
+                    onCancel={() => setSelectedRecipe(null)}
+                  />
+                ) : (
+                  <RecipeCard
+                    recipe={recipe}
+                    onEdit={() => setSelectedRecipe(recipe)}
+                    onDelete={handleDeleteRecipe}
+                    showButtons={true}
+                  />
+                )}
     </div>
   ))
 ) : (

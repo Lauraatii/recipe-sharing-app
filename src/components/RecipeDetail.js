@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import RecipeComments from './RecipeComments';
-import CommentForm from './CommentForm';
+import { firestore } from "../firebase";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import RecipeComments from "./RecipeComments";
+import CommentForm from "./CommentForm";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { firestore } from '../firebase';
-
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  TwitterIcon
+} from "react-share";
 
 const RecipeDetail = ({
   onAddRating,
@@ -16,15 +21,20 @@ const RecipeDetail = ({
   onDeleteComment,
 }) => {
   const { id } = useParams();
-  const recipe = useSelector((state) => state.recipes.find((recipe) => recipe.id === id));
-  const [creatorProfileImage, setCreatorProfileImage] = useState(null);
+  const recipe = useSelector((state) =>
+    state.recipes.find((recipe) => recipe.id === id)
+  );
+  const [creatorProfileImage] = useState(null);
 
   useEffect(() => {
     const fetchCreatorProfileImage = async () => {
       try {
-        const userDoc = await firestore.collection('users').doc(recipe.createdBy).get();
-        const userData = userDoc.data();
-        setCreatorProfileImage(userData.profileImageUrl);
+        const userDoc = await firestore
+          .collection("users")
+          .doc(recipe.createdBy)
+          .get();
+        // const userData = userDoc.data();
+        // setCreatorProfileImage(userData.profileImageUrl);
       } catch (error) {
         console.error("Error fetching creator's profile image:", error);
       }
@@ -39,6 +49,8 @@ const RecipeDetail = ({
     return <div>Loading...</div>;
   }
 
+  const recipeUrl = window.location.href;
+
   return (
     <div className="recipe-detail">
       <Link to="/" className="back-button">
@@ -47,6 +59,7 @@ const RecipeDetail = ({
       </Link>
       <h2>{recipe.title}</h2>
       <img src={recipe.image} alt={recipe.title} />
+      {recipe.isVegan && <h2 placeholder="leave">This recipe is vegan 🌱</h2>}
       <p>{recipe.description}</p>
       <h3>Ingredients:</h3>
       <div>
@@ -66,13 +79,26 @@ const RecipeDetail = ({
             </p>
           ))}
       </div>
-      <h4>By: {recipe.createdByEmail}</h4>
-      {creatorProfileImage && <img src={creatorProfileImage} alt={recipe.createdByEmail} />}
+      <h4>Recipe author: {recipe.createdByEmail}</h4>
+      {creatorProfileImage && (
+        <img src={creatorProfileImage} alt={recipe.createdByEmail} />
+      )}
+      <div className="share-button-container">
+        <FacebookShareButton url={recipeUrl}>
+          <div className="share-button">
+            <FacebookIcon size={24} round />
+            <span>Share on Facebook</span>
+          </div>
+        </FacebookShareButton>
+        <TwitterShareButton url={recipeUrl}>
+          <div className="share-button">
+            <TwitterIcon size={24} round />
+            <span>Share on Twitter</span>
+          </div>
+        </TwitterShareButton>
+      </div>
       <RecipeComments />
-      <CommentForm
-        recipeId={id}
-        onAddComment={onAddComment}
-      />
+      <CommentForm recipeId={id} onAddComment={onAddComment} />
     </div>
   );
 };

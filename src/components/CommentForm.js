@@ -30,7 +30,7 @@ const CommentForm = () => {
     }
     const commentData = {
       content: comment,
-      author: 'fifi@gmail.com', // Replace this with the actual author email
+      author: 'fifi@gmail.com', 
       timestamp: new Date().toISOString(),
     };
     await addComment(id, commentData);

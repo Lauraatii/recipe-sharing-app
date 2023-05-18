@@ -14,7 +14,7 @@ const Home = () => {
   const [selectedCategory] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
   const [servingFilter, setServingFilter] = useState("");
-  const [withImageFilter, setWithImageFilter] = useState(false);
+  const [veganFilter, setVeganFilter] = useState(false);
 
   useEffect(() => {
     const recipesRef = collection(firestore, "recipes");
@@ -29,7 +29,7 @@ const Home = () => {
     return unsubscribe;
   }, [dispatch]);
 
-  const handleSearch = (searchText = '', category, time, servings, withImage) => {
+  const handleSearch = (searchText = '', category, time, servings, isVegan) => {
     let filtered = recipes;
   
     if (searchText) {
@@ -48,8 +48,8 @@ const Home = () => {
       filtered = filtered.filter((recipe) => recipe.servings === servings);
     }
   
-    if (withImage) {
-      filtered = filtered.filter((recipe) => recipe.image);
+    if (isVegan) {
+      filtered = filtered.filter((recipe) => recipe.isVegan);
     }
   
     setFilteredRecipes(filtered);
@@ -66,7 +66,7 @@ const Home = () => {
             type="text"
             className="search-bar"
             placeholder="Search"
-            onChange={(e) => handleSearch(e.target.value, selectedCategory, timeFilter, servingFilter, withImageFilter)}
+            onChange={(e) => handleSearch(e.target.value, selectedCategory, timeFilter, servingFilter)}
           />
           
           <select
@@ -74,7 +74,7 @@ const Home = () => {
             value={timeFilter}
             onChange={(e) => {
               setTimeFilter(e.target.value);
-              handleSearch('', selectedCategory, e.target.value, servingFilter, withImageFilter);
+              handleSearch('', selectedCategory, e.target.value, servingFilter);
             }}
           >
             <option value="">Search by time</option>
@@ -90,7 +90,7 @@ const Home = () => {
             value={servingFilter}
             onChange={(e) => {
             setServingFilter(e.target.value);
-            handleSearch('', selectedCategory, timeFilter, e.target.value, withImageFilter);
+            handleSearch('', selectedCategory, timeFilter, e.target.value);
             }}
           >
             <option value="">Search by servings</option>
@@ -100,18 +100,19 @@ const Home = () => {
             <option value="6">6 servings</option>
             <option value="8">8 servings</option>
           </select>
-          <label className="with-image-label">
-            <input
-              type="checkbox"
-              className="with-image-checkbox"
-              checked={withImageFilter}
-              onChange={(e) => {
-                setWithImageFilter(e.target.checked);
-                handleSearch('', selectedCategory, timeFilter, servingFilter, e.target.checked);
-              }}
-            />
-            Image
-          </label>
+          <label className="vegan-label">
+          <input
+            type="checkbox"
+            className="vegan-checkbox"
+            checked={veganFilter}
+            onChange={(e) => {
+              setVeganFilter(e.target.checked);
+              handleSearch('', selectedCategory, timeFilter, servingFilter, e.target.checked);
+            }}
+          />
+          Vegan
+        </label>
+
         </div>
         <RecipeList className="recipe-list" recipes={filteredRecipes} />
       </div>

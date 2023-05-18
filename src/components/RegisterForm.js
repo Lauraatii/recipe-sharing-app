@@ -47,7 +47,7 @@ const RegisterForm = () => {
         <form onSubmit={handleRegister}>
           <input
             type="text"
-            placeholder="Display Name"
+            placeholder="Full Name"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             required

@@ -49,6 +49,7 @@
 
 .recipe-card {
   background-color: #ffffff;
+  position: relative;
   padding: 1.5rem;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -111,4 +112,21 @@
   background-color: #b39997;
 }
 
+.vegan-icon-wrapper {
+  position: absolute;
+  top: -10px;
+  left: -15px;
+  width: 45px; 
+  height: 45px; 
+  background-color: #c5f9b2; 
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
 
+.vegan-icon {
+  font-size: 1.5rem; 
+}

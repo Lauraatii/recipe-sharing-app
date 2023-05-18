@@ -4,6 +4,8 @@ import { setUser, setError } from "../redux/actions";
 import LoginForm from "../components/LoginForm";
 import { auth } from "../firebase";
 
+
+
 const Login = () => {
   const dispatch = useDispatch();
 
@@ -22,7 +24,7 @@ const Login = () => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h2>Login</h2>
       <LoginForm onSubmit={handleLogin} />
     </div>
   );

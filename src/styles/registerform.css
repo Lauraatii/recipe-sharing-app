@@ -1,8 +1,7 @@
 .register-form-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(60vh - 60px);
+  flex-direction: column;
+  min-height: 70vh;
 }
 
 .register-form-container form {
