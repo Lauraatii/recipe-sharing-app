@@ -5,7 +5,7 @@ import Comment from './Comment';
 
 const RecipeComments = () => {
   const [comments, setComments] = useState([]);
-  const { id } = useParams(); // Get the recipe ID from the URL parameters
+  const { id } = useParams(); // Gets the recipe ID from the URL parameters
 
   useEffect(() => {
     const fetchComments = async () => {

@@ -33,32 +33,29 @@ const RecipeForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if image is selected
+    // Checks if image is selected
     if (!image) {
       console.error("Image not selected");
       return;
     }
 
   
-    // Upload image to Firebase Storage
-    // console.log(image, image.name);
+    // Uploads image to Firebase Storage
     console.log(storage);
 
     // const imageRef = firebase.storage().ref(`images/${image.name}`);
     await firebase.storage().ref(`images/${image.name}`).put(image);
     const imageUrl = await firebase.storage().ref(`images/${image.name}`).getDownloadURL();
 
-   
 
-
-    // Check if the user is authenticated
+    // Checks if the user is authenticated
     const user = auth.currentUser;
     if (!user) {
       console.error("User not authenticated");
       return;
     }
   
-    // Save recipe data to Firestore
+    // Saves recipe data to Firestore
     const db = getFirestore();
     const recipesRef = collection(db, "recipes");
     const newRecipe = {
@@ -76,7 +73,7 @@ const RecipeForm = () => {
     };
     await addDoc(recipesRef, newRecipe);
   
-    // Open the modal with success message
+    // Opens the modal with success message
     setModalIsOpen(true);
   };
   
@@ -100,7 +97,7 @@ const RecipeForm = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-    navigate("/recipes");
+    navigate("/");
   };
 
   return (
@@ -155,7 +152,7 @@ const RecipeForm = () => {
         <p>You can see your recipe under your profile.</p>
         </div>
         <div className="button-container">
-        <button onClick={() => navigate('/recipes')}>Browse More Recipes</button>
+        <button onClick={() => navigate('/')}>Browse More Recipes</button>
         <button onClick={() => navigate('/profile')}>Go to My Profile</button>
         </div>
         <button className="close-modal" onClick={closeModal}>×</button>

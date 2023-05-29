@@ -12,7 +12,6 @@ const Profile = () => {
   const [userRecipes, setUserRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-
   console.log("User object:", user);
 
   const handleEditRecipe = async (updatedData) => {

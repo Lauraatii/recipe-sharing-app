@@ -50,3 +50,14 @@
 body {
   background-color: #f1e9e5;
 }
+
+.register-form-container p{
+  color: #9c786c;
+  justify-content: center;
+}
+
+h2{
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: 2.5rem;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';  // import the hook
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const addComment = async (recipeId, commentData) => {
@@ -10,7 +11,8 @@ const addComment = async (recipeId, commentData) => {
     const docRef = await addDoc(commentsRef, {
       recipeId,
       ...commentData,
-    });
+      authorImage: `https://source.unsplash.com/random/100x100?faces`, // Adds random image URL to each comment
+    }); // Adds a new document to the 'comments' collection,adddoc
     console.log('Comment added with ID: ', docRef.id);
     return docRef.id;
   } catch (error) {
@@ -21,6 +23,8 @@ const addComment = async (recipeId, commentData) => {
 const CommentForm = () => {
   const { id } = useParams();
   const [comment, setComment] = useState('');
+  const user = useSelector(state => state.user);  // accessing the user data from redux state
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,9 +34,9 @@ const CommentForm = () => {
     }
     const commentData = {
       content: comment,
-      author: 'fifi@gmail.com', 
+      author: user.email,
       timestamp: new Date().toISOString(),
-    };
+    }; 
     await addComment(id, commentData);
     setComment('');
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../firebase";
+// import { firestore } from "../firebase";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import RecipeComments from "./RecipeComments";
@@ -15,10 +15,7 @@ import {
 } from "react-share";
 
 const RecipeDetail = ({
-  onAddRating,
-  onDeleteRating,
   onAddComment,
-  onDeleteComment,
 }) => {
   const { id } = useParams();
   const recipe = useSelector((state) =>
@@ -29,10 +26,10 @@ const RecipeDetail = ({
   useEffect(() => {
     const fetchCreatorProfileImage = async () => {
       try {
-        const userDoc = await firestore
-          .collection("users")
-          .doc(recipe.createdBy)
-          .get();
+        // const userDoc = await firestore
+        //   .collection("users")
+        //   .doc(recipe.createdBy)
+        //   .get();
         // const userData = userDoc.data();
         // setCreatorProfileImage(userData.profileImageUrl);
       } catch (error) {

@@ -49,4 +49,10 @@
   body {
     background-color: #f1e9e5;
   }
+
+  h2{
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 2.5rem;
+  }
   

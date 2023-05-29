@@ -4,6 +4,7 @@ import { setUser, setError } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import "../styles/registerform.css";
 import { doc, setDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
   const [displayName, setDisplayName] = useState("");
@@ -41,8 +42,14 @@ const RegisterForm = () => {
       {isRegistered ? (
         <div>
           <h2>Registration successful!</h2>
-          <p>Welcome, {displayName}! You can now log in with your new account.</p>
-        </div>
+          <h2>
+            Welcome, {displayName}! Start{" "}
+            <Link to="/" className="browse-link">
+              browsing
+            </Link>{" "}
+            recipes 🥳
+          </h2>        
+          </div>
       ) : (
         <form onSubmit={handleRegister}>
           <input

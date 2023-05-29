@@ -5,7 +5,6 @@ import "../styles/recipeList.css"
 
 const RecipeCard = ({ recipe, onEdit, onDelete, showButtons }) => {
   
-
   return (
     <div className="recipe-card">
      <Link to={`/recipes/${recipe.id}`} className="recipe-link">
