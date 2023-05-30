@@ -35,6 +35,7 @@ const Profile = () => {
     }
   };
 
+  // display user recipes
   useEffect(() => {
     console.log("User recipes:", userRecipes);
     const loadUserRecipes = async () => {
@@ -64,7 +65,6 @@ const Profile = () => {
               image: recipeData.image, 
             });
           }
-  
           setUserRecipes(loadedUserRecipes);
         } catch (error) {
           console.error("Error loading user recipes:", error);

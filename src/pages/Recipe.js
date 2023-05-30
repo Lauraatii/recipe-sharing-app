@@ -76,7 +76,6 @@ const Recipe = () => {
               <RecipeForm onSubmit={handleEdit} recipe={recipe} />
             </>
           )}
-          {/* Pass the handler functions to the RecipeDetail component */}
           <RecipeDetail
             recipe={recipe}
             onAddRating={handleAddRating}

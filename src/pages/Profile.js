@@ -16,7 +16,6 @@ const ProfilePage = ({ user, clearUser, setUser }) => {
         setUser(user);
       })
       .catch((error) => {
-        // Handle error
         console.error('Error signing in: ', error);
       });
   };
@@ -50,7 +49,7 @@ const ProfilePage = ({ user, clearUser, setUser }) => {
     </div>
   );
 };
-
+// "user" made accesible as a prop in comp
 const mapStateToProps = (state) => {
   return {
     user: state.user,

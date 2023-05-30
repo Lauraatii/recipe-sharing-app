@@ -4,7 +4,6 @@ import { storage, auth } from '../firebase';
 import "../styles/upload.css";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/storage';
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";import 'firebase/compat/firestore';
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Modal from 'react-modal';
 
@@ -33,17 +32,14 @@ const RecipeForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Checks if image is selected
     if (!image) {
       console.error("Image not selected");
       return;
     }
-
   
     // Uploads image to Firebase Storage
     console.log(storage);
 
-    // const imageRef = firebase.storage().ref(`images/${image.name}`);
     await firebase.storage().ref(`images/${image.name}`).put(image);
     const imageUrl = await firebase.storage().ref(`images/${image.name}`).getDownloadURL();
 
@@ -73,7 +69,6 @@ const RecipeForm = () => {
     };
     await addDoc(recipesRef, newRecipe);
   
-    // Opens the modal with success message
     setModalIsOpen(true);
   };
   

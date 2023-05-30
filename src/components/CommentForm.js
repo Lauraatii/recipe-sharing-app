@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';  // import the hook
+import { useSelector } from 'react-redux'; 
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const addComment = async (recipeId, commentData) => {

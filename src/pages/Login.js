@@ -5,7 +5,6 @@ import LoginForm from "../components/LoginForm";
 import { auth } from "../firebase";
 
 
-
 const Login = () => {
   const dispatch = useDispatch();
 

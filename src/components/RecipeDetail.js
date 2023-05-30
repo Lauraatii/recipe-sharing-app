@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { firestore } from "../firebase";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import RecipeComments from "./RecipeComments";

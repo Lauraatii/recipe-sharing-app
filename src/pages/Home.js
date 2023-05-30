@@ -61,7 +61,6 @@ const Home = () => {
       <div className="container">
         <h1 className="heading">Share a dish recipes</h1>
         <div className="search-bar-container">
-          {/* <FontAwesomeIcon icon={faSearch} className="search-icon" /> */}
           <input
             type="text"
             className="search-bar"

@@ -7,17 +7,16 @@ import { auth } from '../firebase';
 
 const Register = ({ setUser, setError }) => {
   const handleRegister = (displayName, email, password, confirmPassword) => {
-    // Call Firebase auth method to register the user
+    // Calls Firebase auth method to register the user
     auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        // Update the user's display name and dispatch the setUser action
+        // Updates the user's display name and dispatch the setUser action
         user.updateProfile({ displayName }).then(() => {
           setUser(user);
         });
       })
       .catch((error) => {
-        // If unsuccessful, dispatch the setError action with the error message
         setError(error.message);
       });
   };
